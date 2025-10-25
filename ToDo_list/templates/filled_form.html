@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Form: </h1>
+    <a href="{% url 'taskspage' %}">Go Back <i class="fa-solid fa-arrow-left"></i></a>
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="title" placeholder="Title" value="{{ task.title }}" required><br><br>
+
+        <textarea name="desc" id="" placeholder="description">{{ task.desc }}</textarea><br><br>
+
+        <label for="">Complete:</label>
+        <input type="checkbox" name="complete" placeholder="complete_status" 
+        {% if task.complete_status %} checked {% endif %}><br><br>
+        
+        <input type="submit" value="Update Task">
+        <input type="reset">
+    </form>
+    </div>
+</body>
+</html>
+
+{% endblock content %}

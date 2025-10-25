@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Login: </h1>
+            {% if messages %}
+            {% for msg in messages %}
+            <p class="warning"> 
+                <i class="fa-solid fa-circle-exclamation"></i> {{ msg }}
+            </p>
+            {% endfor %}
+            {% endif %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="username" name="username" required><br><br>
+            <input type="password" placeholder="password" name="password" required><br><br>
+            <input type="submit" value="Login">
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p>
+    </div>
+    
+</body>
+</html>
+
+{% endblock %}

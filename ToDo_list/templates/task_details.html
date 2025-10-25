@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'taskspage' %}">Go Back</a>
+    <h1>Task: {{ task.title }}</h1>
+    <h1>
+        {% if task.complete_status %}
+        Completed
+        {% else %}
+        Pending
+        {% endif %}
+    </h1>
+    <h1>Task created time: {{ task.Created_Time }}</h1>
+    </div>
+</body>
+</html>
+
+{% endblock content %}

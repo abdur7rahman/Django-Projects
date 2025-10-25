@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        td .fa-solid{
+            color: black;
+            position: relative;
+            left: 110px;
+            padding-right: 10px;
+        }
+
+        .user{
+            text-align: center;
+            border-bottom: 3px solid black;
+            justify-self: center;
+            padding-bottom: 20px;
+            font-size: larger;
+            line-height: 1;
+            width: 440px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">    
+        <div class="user">
+            {% if request.user.is_authenticated %}
+            <h2>Welcome {{ request.user }}</h2>
+            <a href="logout">Logout</a>
+            {% else %}
+            <a href="login">Login</a>
+            {% endif %}
+        </div>
+
+    <h1>To Do list</h1>
+    <a href="task_create">Add Task<i class="fa-solid fa-plus"></i></a>
+    <form action="" method="GET">
+        <input type="search" placeholder="type here" name="search" value="{{ search_value }}">
+        <input type="submit" value="Search">
+    </form>
+    <h4><u>Incompleted Tasks:</u> &emsp;{{ count }}</h4>
+    <table>
+        {% if count %}
+        <tr>
+            <th>Tasks</th>
+        </tr>
+        {% endif %}
+        {% for item in task %}
+        <tr>
+            <td>
+                {% if item.complete_status %}
+                <s>{{ item.title }} ✅</s>
+                {% else %}
+                <span>{{ item.title }} ❌</span>
+                {% endif %}
+            </td>
+            <td><a href="{% url 'detail' item.id %}"><i class="fa-solid fa-eye"></i></a></td>
+            <td><a href="{% url 'update' item.id %}"><i class="fa-solid fa-pencil"></i></a></td>
+            <td><a href="{% url 'delete' item.id %}"><i class="fa-solid fa-trash"></i></a></td>
+        </tr>
+        {% empty %}
+        <h1>To do list is empty</h1>
+        <a href="task_create">Create New Task <i class="fa-solid fa-plus"></i></a>
+        {% endfor %}
+    </table>
+    </div>
+</body>
+</html>
+
+{% endblock content %}
