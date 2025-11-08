@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{{ post.title }}{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+    <!-- news details -->
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-lg-12 mx-auto">
+          <!-- Post Details -->
+          <div class="card">
+            <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}" />
+            <div class="card-body">
+              <h2 class="card-title">{{ post.title }}</h2>
+              <h4>{{ post.description }}</h4>
+              <p class="text-muted">Published on: {{ post.date }}</p>
+              <p class="card-text">{{ post.content | safe }}</p>
+
+              <!-- Like Button (Without AJAX) -->
+              <form method="POST" action="{% url 'like' post.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger">
+                  <i class="fa fa-heart"></i> Like
+                </button>
+                <span>{{ post.like }}</span> Likes
+              </form>
+
+              <!-- Comment Count -->
+              <div class="mt-2">
+                <i class="fa fa-comment text-primary"></i>
+                <span>{{ comments.count }}</span> Comments
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+          <div class="mt-4">
+            <h4>Comments {{ comments.count }}</h4>
+            <ul class="list-group">
+              {% for comment in comments %}
+              <li class="list-group-item">
+                <p class="mb-1">
+                  <strong>{{ comment.name }}</strong> 
+                  {{ comment.body }}
+                </p>
+                <small class="text-muted">{{ comment.date }}</small>
+              </li>
+              {% empty %}
+              <li class="list-group-item text-muted">
+                No comments yet. Be the first to comment!
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Comment Form -->
+          <div class="mt-4">
+            <h4>Leave a Comment</h4>
+            <form method="POST">
+              {% csrf_token %}
+              <div class="mb-3">
+                {{ forms.as_p }}
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Post Comment
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock content%}
+  </body>
+</html>
